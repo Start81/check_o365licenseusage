@@ -1,6 +1,4 @@
 severity = 3
-[InputOutput::RequireBriefOpen]
-lines = 10
 [-InputOutput::RequireBriefOpen]
 [-Modules::ProhibitExcessMainComplexity]
 [InputOutput::RequireCheckedSyscalls]
