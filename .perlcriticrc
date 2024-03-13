@@ -1,4 +1,4 @@
-severity = 3
+severity = 5
 [InputOutput::RequireBriefOpen]
 lines = 5
 [-Modules::ProhibitExcessMainComplexity]
