@@ -1,10 +1,10 @@
 on: [push]
 jobs:
   critic:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - name: Run Perl::Critic
-      uses: natanlao/perl-critic-action@v1.1
+      uses: natanlao/perl-critic-action@develop
       with:
         files: critic
