@@ -61,7 +61,7 @@ Usage: check_o365licenseusage.pl  [-v] -T <TENANTID> -I <CLIENTID> -^p <CLIENTSE
 sample : 
 
 ```bash
-perl GetLicencesO365.pl -T <TENANTID> -I <CLIENTID> -p <CLIENTID> -N -N OFFICESUBSCRIPTION -w 80 -c 95
+perl GetLicencesO365.pl -T <TENANTID> -I <CLIENTID> -p <CLIENTID> -N OFFICESUBSCRIPTION -w 80 -c 95
 ```
 
 you may get :
