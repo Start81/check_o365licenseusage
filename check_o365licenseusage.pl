@@ -3,8 +3,8 @@
 # Script Name   : check_o365licenseusage.pl
 # Usage Syntax  : check_o365licenseusage.pl [-v] -T <TENANTID> -I <CLIENTID> -p <CLIENTSECRET> -H <SMTPHOSTNAME> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>] 
 # Author        : DESMAREST JULIEN (Start81)
-# Version       : 1.0.0
-# Last Modified : 13/03/2024
+# Version       : 1.0.1
+# Last Modified : 27/05/2024
 # Modified By   : DESMAREST JULIEN (Start81)
 # Description   : check o365 License usage
 # Depends On    : REST::Client, Data::Dumper,  Monitoring::Plugin, File::Basename, JSON, Readonly, URI::Encode
@@ -13,6 +13,7 @@
 #    Legend:
 #       [*] Informational, [!] Bugix, [+] Added, [-] Removed
 # - 13/03/2024 | 1.0.0 | [*] initial realease
+# - 27/05/2024 | 1.0.0 | [*] Improve output format
 #===============================================================================
 use REST::Client;
 use Data::Dumper;
@@ -24,7 +25,7 @@ use warnings;
 use Readonly;
 use Monitoring::Plugin;
 use URI::Encode;
-Readonly our $VERSION => '1.0.0';
+Readonly our $VERSION => '1.0.1';
 my $graph_endpoint = "https://graph.microsoft.com";
 my @licenses_name = ();
 my @criticals = ();
@@ -239,7 +240,7 @@ do {
             $result = (100*$used_license)/$license_unit;
             $np->add_perfdata(label => $product_name . "_usage", value => substr($result,0,5), uom => '%', warning => $o_warning, critical => $o_critical);
             $product_name ="$display_name ($product_name)" if ($display_name);
-            $msg = "$product_name  usage : $result % ($used_license/$license_unit) " ;
+            $msg = "$product_name  usage : $result % ($used_license/$license_unit)" ;
             if ((defined($o_warning) || defined($o_critical))) {
                 $np->set_thresholds(warning => $o_warning, critical => $o_critical);
                 $status = $np->check_threshold($result);
