@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #===============================================================================
 # Script Name   : check_o365licenseusage.pl
-# Usage Syntax  : check_o365licenseusage.pl [-v] -T <TENANTID> -I <CLIENTID> -^p <CLIENTSECRET> -H <SMTPHOSTNAME> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>] 
+# Usage Syntax  : check_o365licenseusage.pl [-v] -T <TENANTID> -I <CLIENTID> -p <CLIENTSECRET> -H <SMTPHOSTNAME> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>] 
 # Author        : DESMAREST JULIEN (Start81)
 # Version       : 1.0.0
 # Last Modified : 13/03/2024
@@ -38,7 +38,7 @@ my $me = basename($0);
 my %ssl=('NO'=>0,'SSL'=> 'ssl' ,'TLS'=>'starttls');
 my $client = REST::Client->new();
 my $np = Monitoring::Plugin->new(
-    usage => "Usage: %s  [-v] -T <TENANTID> -I <CLIENTID> -^p <CLIENTSECRET> -H <SMTPHOSTNAME> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>]   \n ",
+    usage => "Usage: %s  [-v] -T <TENANTID> -I <CLIENTID> -p <CLIENTSECRET> -H <SMTPHOSTNAME> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>]   \n ",
     plugin => $me,
     shortname => " ",
     blurb => "$me check o365 License usage",
