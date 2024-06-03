@@ -13,7 +13,7 @@
 #    Legend:
 #       [*] Informational, [!] Bugix, [+] Added, [-] Removed
 # - 13/03/2024 | 1.0.0 | [*] initial realease
-# - 27/05/2024 | 1.0.0 | [*] Improve output format
+# - 27/05/2024 | 1.0.1 | [*] Improve output format
 #===============================================================================
 use REST::Client;
 use Data::Dumper;
