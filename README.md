@@ -28,7 +28,7 @@ General Public Licence (see http://www.fsf.org/licensing/licenses/gpl.txt).
 
 check_o365licenseusage.pl check o365 License usage
 
-Usage: check_o365licenseusage.pl  [-v] -T <TENANTID> -I <CLIENTID> -^p <CLIENTSECRET> -H <SMTPHOSTNAME> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>]
+Usage: check_o365licenseusage.pl  [-v] -T <TENANTID> -I <CLIENTID> -p <CLIENTSECRET> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>]
 
 
  -?, --usage
