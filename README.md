@@ -13,14 +13,14 @@ to install them type :
 (sudo) cpan REST::Client Data::Dumper JSON Readonly Monitoring::Plugin File::Basename URI::Encode
 ```
 
-this script writes the authentication information in the/tmp directory it will be necessary to verify that this directory exists and that the account which will launch the script has the necessary access permissions.
+this script writes the authentication information in the /tmp directory it will be necessary to verify that this directory exists and that the account which will launch the script has the necessary access permissions.
 
-this scrip use an azure app registration  azure with access permissions on  graph api : type application,  Organization.Read.All et Directory.Read.All.
+this script use an azure app registration  azure with access permissions on  graph api : type application,  Organization.Read.All et Directory.Read.All.
 
 ### Use case
 
 ```bash
-check_o365licenseusage.pl 1.0.0
+check_o365licenseusage.pl 1.0.1
 
 This nagios plugin is free software, and comes with ABSOLUTELY NO WARRANTY.
 It may be used, redistributed and/or modified under the terms of the GNU
