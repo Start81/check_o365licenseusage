@@ -36,7 +36,6 @@ my $result;
 my $o_verb;
 sub verb { my $t=shift; print $t,"\n" if ($o_verb) ; return 0}
 my $me = basename($0);
-my %ssl=('NO'=>0,'SSL'=> 'ssl' ,'TLS'=>'starttls');
 my $client = REST::Client->new();
 my $np = Monitoring::Plugin->new(
     usage => "Usage: %s  [-v] -T <TENANTID> -I <CLIENTID> -p <CLIENTSECRET> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>]   \n ",
