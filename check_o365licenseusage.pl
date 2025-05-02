@@ -3,7 +3,7 @@
 # Script Name   : check_o365licenseusage.pl
 # Usage Syntax  : check_o365licenseusage.pl [-v] -T <TENANTID> -I <CLIENTID> -p <CLIENTSECRET> [-N <LICENSENAME>] [-w <WARNING>] [-c <CRITICAL>] 
 # Author        : DESMAREST JULIEN (Start81)
-# Version       : 1.0.1
+# Version       : 1.0.2
 # Last Modified : 27/05/2024
 # Modified By   : DESMAREST JULIEN (Start81)
 # Description   : check o365 License usage
@@ -14,6 +14,7 @@
 #       [*] Informational, [!] Bugix, [+] Added, [-] Removed
 # - 13/03/2024 | 1.0.0 | [*] initial realease
 # - 27/05/2024 | 1.0.1 | [*] Improve output format
+# - 02/05/2025 | 1.0.2 | [*] Add some token format check
 #===============================================================================
 use REST::Client;
 use Data::Dumper;
@@ -180,7 +181,6 @@ my $token;
 my $last_mod_time;
 my $token_json;
 if (-e $tmp_file) {
-    
     #Read previous token
     ($token,$last_mod_time) = read_token_file ($tmp_file);
     $token_json = from_json($token);
@@ -189,15 +189,25 @@ if (-e $tmp_file) {
     my $current_time = time();
     verb "current_time : $current_time   exptime : $expiration\n";
     if ($current_time > $expiration ) {
+        #If token is too old
         #get a new token
         $token = get_access_token($clientid,$clientsecret,$tenantid);
+		eval {
+			$token_json = from_json($token);
+		} or do {
+			$np->plugin_exit('UNKNOWN',"Failed to decode JSON: $@");
+		};
         write_file($token,$tmp_file);
-        $token_json = from_json($token);
     }
 } else {
+    #First token
     $token = get_access_token($clientid,$clientsecret,$tenantid);
+    eval {
+		$token_json = from_json($token);
+	} or do {
+		$np->plugin_exit('UNKNOWN',"Failed to decode JSON: $@");
+	};
     write_file($token,$tmp_file);
-    $token_json = from_json($token);
 }
 verb(Dumper($token_json ));
 $token = $token_json->{'access_token'};
@@ -233,8 +243,8 @@ do {
         $used_license = $licences_list->{'value'}->[$i]->{'consumedUnits'};
         if ($license_unit == 0 )
         {
-            push (@unknown,"$product_name prepaidUnits is zero");
-
+            #push (@unknown,"$product_name prepaidUnits is zero");
+            verb ("Skip $product_name prepaidUnits is zero");
         } else {
             $result = (100*$used_license)/$license_unit;
             $np->add_perfdata(label => $product_name . "_usage", value => substr($result,0,5), uom => '%', warning => $o_warning, critical => $o_critical);
@@ -257,7 +267,7 @@ do {
 } while (exists $licences_list->{'value'}->[$i]);
 
 if ($license_founded == 0){
-    $msg = "license  " . $o_license_name. " not found  available license(s) is(are) : " . join(", ", @licenses_name);
+    $msg = "license  " . $o_license_name . " not found  available license(s) is(are) : " . join(", ", @licenses_name);
     $np->plugin_exit('UNKNOWN',$msg);
 }
 $np->plugin_exit('CRITICAL', join(', ', @criticals)) if (scalar @criticals > 0);
