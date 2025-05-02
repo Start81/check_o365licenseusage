@@ -26,7 +26,7 @@ use warnings;
 use Readonly;
 use Monitoring::Plugin;
 use URI::Encode;
-Readonly our $VERSION => '1.0.1';
+Readonly our $VERSION => '1.0.2';
 my $graph_endpoint = "https://graph.microsoft.com";
 my @licenses_name = ();
 my @criticals = ();
