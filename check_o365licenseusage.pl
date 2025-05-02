@@ -192,32 +192,31 @@ if (-e $tmp_file) {
         #If token is too old
         #get a new token
         $token = get_access_token($clientid,$clientsecret,$tenantid);
-		eval {
-			$token_json = from_json($token);
-		} or do {
-			$np->plugin_exit('UNKNOWN',"Failed to decode JSON: $@");
-		};
+	eval {
+	    $token_json = from_json($token);
+	} or do {
+	    $np->plugin_exit('UNKNOWN',"Failed to decode JSON: $@");
+	};
         write_file($token,$tmp_file);
     }
 } else {
     #First token
     $token = get_access_token($clientid,$clientsecret,$tenantid);
     eval {
-		$token_json = from_json($token);
-	} or do {
-		$np->plugin_exit('UNKNOWN',"Failed to decode JSON: $@");
-	};
+	$token_json = from_json($token);
+    } or do {
+        $np->plugin_exit('UNKNOWN',"Failed to decode JSON: $@");
+    };
     write_file($token,$tmp_file);
 }
 verb(Dumper($token_json ));
-$token = $token_json->{'access_token'};
 
+$token = $token_json->{'access_token'};
 $client->addHeader('Authorization', 'Bearer ' . $token);
 $client->addHeader('Content-Type', 'application/x-www-form-urlencoded');
 $client->addHeader('Accept', 'application/json');
-
-
 my $url = $graph_endpoint . "/v1.0/subscribedSkus";
+
 verb($url);
 $client->GET($url);
 if($client->responseCode() ne '200'){
@@ -241,8 +240,7 @@ do {
         $display_name = $skuPartNumber{$licences_list->{'value'}->[$i]->{'skuPartNumber'}} if (exists $skuPartNumber{$licences_list->{'value'}->[$i]->{'skuPartNumber'}});
         $license_unit = $licences_list->{'value'}->[$i]->{'prepaidUnits'}->{'enabled'} ;
         $used_license = $licences_list->{'value'}->[$i]->{'consumedUnits'};
-        if ($license_unit == 0 )
-        {
+        if ($license_unit == 0 ) {
             #push (@unknown,"$product_name prepaidUnits is zero");
             verb ("Skip $product_name prepaidUnits is zero");
         } else {
