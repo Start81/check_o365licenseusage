@@ -169,7 +169,6 @@ my $o_license_name = $np->opts->licensename;
 my $o_warning = $np->opts->warning;
 my $o_critical = $np->opts->critical;
 my $status;
-my $budget_founded = 0;
 $o_verb = $np->opts->verbose if (defined $np->opts->verbose);
 my $i = 0;
 verb(" tenantid = " . $tenantid);
